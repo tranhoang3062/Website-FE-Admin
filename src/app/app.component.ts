@@ -1,34 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-
-import { IconSetService } from '@coreui/icons-angular';
-import { iconSubset } from './icons/icon-subset';
+import { ChildActivationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-root',
-  template: '<router-outlet />',
-  standalone: true,
-  imports: [RouterOutlet]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
-  title = 'Admin';
-
-  constructor(
-    private router: Router,
-    private titleService: Title,
-    private iconSetService: IconSetService
-  ) {
-    this.titleService.setTitle(this.title);
-    // iconSet singleton
-    this.iconSetService.icons = { ...iconSubset };
-  }
-
-  ngOnInit(): void {
-    this.router.events.subscribe((evt) => {
-      if (!(evt instanceof NavigationEnd)) {
-        return;
-      }
-    });
-  }
+export class AppComponent {
+    title = 'sb-admin-angular';
+    constructor(public router: Router, private titleService: Title) {
+        this.router.events
+            .pipe(filter(event => event instanceof ChildActivationEnd))
+            .subscribe(event => {
+                let snapshot = (event as ChildActivationEnd).snapshot;
+                while (snapshot.firstChild !== null) {
+                    snapshot = snapshot.firstChild;
+                }
+                this.titleService.setTitle(snapshot.data.title || 'ADMIN - Đồ án');
+            });
+    }
 }
