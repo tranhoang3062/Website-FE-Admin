@@ -13,6 +13,8 @@ import {
     faChevronDown,
     faChevronUp,
     faColumns,
+    faFileContract,
+    faFilm,
     faList,
     faSearch,
     faTable,
@@ -37,5 +39,7 @@ export const fontAwesomeSolidIcons = {
     faTachometerAlt,
     faUser,
     faBox,
-    faList
+    faList,
+    faFilm,
+    faFileContract
 };

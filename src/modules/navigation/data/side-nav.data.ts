@@ -6,7 +6,7 @@ export const sideNavSections: SideNavSection[] = [
     },
     {
         text: 'INTERFACE',
-        items: ['layouts', 'pages'],
+        items: ['pages'],
     },
 ];
 
@@ -32,29 +32,29 @@ export const sideNavItems: SideNavItems = {
         link: '/users',
     },
     slide: {
-        icon: 'tachometer-alt',
+        icon: 'film',
         text: 'Slide',
         link: '/slides',
     },
     article: {
-        icon: 'tachometer-alt',
+        icon: 'file-contract',
         text: 'Article',
         link: '/articles',
     },
-    layouts: {
-        icon: 'columns',
-        text: 'Layouts',
-        submenu: [
-            {
-                text: 'Static Navigation',
-                link: '/dashboard/static',
-            },
-            {
-                text: 'Light Sidenav',
-                link: '/dashboard/light',
-            },
-        ],
-    },
+    // layouts: {
+    //     icon: 'columns',
+    //     text: 'Layouts',
+    //     submenu: [
+    //         {
+    //             text: 'Static Navigation',
+    //             link: '/dashboard/static',
+    //         },
+    //         {
+    //             text: 'Light Sidenav',
+    //             link: '/dashboard/light',
+    //         },
+    //     ],
+    // },
     pages: {
         icon: 'book-open',
         text: 'Pages',
