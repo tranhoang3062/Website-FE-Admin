@@ -24,11 +24,11 @@ export class UserService {
     }
 
     updateUser(id: any, data: any) {
-        return this.apiService.postData(`/admin/user/edit/${id}`, data);
+        return this.apiService.putData(`/admin/user/edit/${id}`, data);
     }
 
-    deleteUser(id: any, data: any) {
-        return this.apiService.postData(`/admin/user/delete/${id}`, data);
+    deleteUser(id: any) {
+        return this.apiService.deleteData(`/admin/user/delete/${id}`);
     }
 
 }

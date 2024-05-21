@@ -24,11 +24,11 @@ export class ProductService {
     }
 
     updateProduct(id: any, data: any) {
-        return this.apiService.postData(`/admin/product/edit/${id}`, data);
+        return this.apiService.putData(`/admin/product/edit/${id}`, data);
     }
 
-    deleteProduct(id: any, data: any) {
-        return this.apiService.postData(`/admin/product/delete/${id}`, data);
+    deleteProduct(id: any) {
+        return this.apiService.deleteData(`/admin/product/delete/${id}`);
     }
 
 }

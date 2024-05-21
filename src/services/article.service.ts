@@ -24,11 +24,11 @@ export class ArticleService {
     }
 
     updateArticle(id: any, data: any) {
-        return this.apiService.postData(`/admin/article/edit/${id}`, data);
+        return this.apiService.putData(`/admin/article/edit/${id}`, data);
     }
 
-    deleteArticle(id: any, data: any) {
-        return this.apiService.postData(`/admin/article/delete/${id}`, data);
+    deleteArticle(id: any) {
+        return this.apiService.deleteData(`/admin/article/delete/${id}`);
     }
 
 }

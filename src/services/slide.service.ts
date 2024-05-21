@@ -24,11 +24,11 @@ export class SlideService {
     }
 
     updateSlide(id: any, data: any) {
-        return this.apiService.postData(`/admin/slide/edit/${id}`, data);
+        return this.apiService.putData(`/admin/slide/edit/${id}`, data);
     }
 
-    deleteSlide(id: any, data: any) {
-        return this.apiService.postData(`/admin/slide/delete/${id}`, data);
+    deleteSlide(id: any) {
+        return this.apiService.deleteData(`/admin/slide/delete/${id}`);
     }
 
 }

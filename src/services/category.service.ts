@@ -24,11 +24,11 @@ export class CategoryService {
     }
 
     updateCategory(id: any, data: any) {
-        return this.apiService.postData(`/admin/category/edit/${id}`, data);
+        return this.apiService.putData(`/admin/category/edit/${id}`, data);
     }
 
-    deleteCategory(id: any, data: any) {
-        return this.apiService.postData(`/admin/category/delete/${id}`, data);
+    deleteCategory(id: any) {
+        return this.apiService.deleteData(`/admin/category/delete/${id}`);
     }
 
 }
