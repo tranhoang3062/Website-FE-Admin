@@ -45,7 +45,50 @@
 </sb-layout-dashboard>
 
 <ng-template #modal let-modal>
-    <span>modal!</span>
+    <div class="modal-header pb-0 align-items-center" style="border: none;">
+        <h4 class="fs--18">Create category</h4>
+    </div>
+    <div class="modal-body pt-0">
+        <form class="form-horizontal m-t-30">
+            <div class="form-group required">
+                <label class="control-label">Category name</label>
+                <input type="text" class="form-control" placeholder="Select category name" formControlName="title" (change)="onChange($event)"/>
+                <!-- <div class="invalid-feedback" *ngIf="fails && fails['title']">
+                    {{ fails['title'][0] }}
+                </div> -->
+            </div>
+            <div class="form-group required">
+                <label class="control-label">Image</label>
+                <div class="input-group">
+                    <div>
+                        <img src="{{ base64Image || '../../../../assets/img/no-image.png' }}" width="100" height="100"/>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" placeholder="Choose file" (click)="onInputClick($event)" (change)="onFileChanged($event, '')" class="custom-file-input" accept="image/*">
+                        <input type="hidden" formControlName="avatar">
+                        <label class="custom-file-label">{{ base64Image }}</label>
+                    </div>
+                </div>
+                <!-- <div class="invalid-feedback" *ngIf="fails && fails['avatar'] && !avatarName">
+                    {{ fails['avatar'][0] }}
+                </div> -->
+            </div>
+            <div class="form-group" style="display: flex; flex-direction: row;">
+                <label class="control-label" style="margin-right: 10px;">Status</label>
+                <div class="form-check-label">
+                    <label class="switch">
+                        <input type="checkbox" [checked]="false"/>
+                        <div class="slider"></div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-2 gap-3">
+                <button type="button" class="btn btn-success">Create</button>
+                <button type="button" class="btn btn-secondary">Cancel</button>
+            </div>
+        </form>
+    </div>
 </ng-template>
 
 <ngx-loading [show]="loading"></ngx-loading>

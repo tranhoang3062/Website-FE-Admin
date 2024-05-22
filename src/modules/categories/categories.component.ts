@@ -36,6 +36,9 @@ export class CategoriesComponent implements OnInit {
 
     selected: any;
 
+    base64Image: any;
+    selectedFile: File[] = [];
+
     constructor(
         private categoryService: CategoryService,
         private cdr: ChangeDetectorRef,
@@ -50,7 +53,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     listCategories() {
-        this.loading = true;
+        // this.loading = true;
         this.categoryService.getList({ ...this.paging }).subscribe(res => {
             if (res.status == 'success') {
 
@@ -61,7 +64,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     createCategory() {
-        this.loading = true;
+        // this.loading = true;
         this.categoryService.createCategory({}).subscribe(res => {
             if (res.status == 'success') {
 
@@ -72,7 +75,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     updateCategory(id: any) {
-        this.loading = true;
+        // this.loading = true;
         this.categoryService.updateCategory(id, {}).subscribe(res => {
             if (res.status == 'success') {
 
@@ -83,7 +86,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     deleteCategory(id: any) {
-        this.loading = true;
+        // this.loading = true;
         this.categoryService.deleteCategory(id).subscribe(res => {
             if (res.status == 'success') {
                 
@@ -107,6 +110,33 @@ export class CategoriesComponent implements OnInit {
     changePage(e: any) {
         this.paging.page = e;
         this.listCategories();
+    }
+
+    onInputClick(event: any) {
+        event.target.value = '';
+    }
+
+    onFileChanged(event: any, form?: any) {
+        if (event.target.files[0].type.indexOf('image') < 0) {
+            this.alertService.fireSmall('error', 'File upload must be image!');
+        } else {
+            if (event.target.files[0].size > 512000) {
+                this.alertService.fireSmall('error', 'Image must be less than 500KB!');
+            } else {
+                this.selectedFile[0] = event.target.files[0];
+                this.readThis(event.target);
+            }
+        }
+    }
+
+    readThis(inputValue: any): void {
+        const file: File = inputValue.files[0];
+        const myReader: FileReader = new FileReader();
+
+        myReader.onloadend = (e) => {
+            this.base64Image = myReader.result;
+        };
+        myReader.readAsDataURL(file);
     }
 
 }
