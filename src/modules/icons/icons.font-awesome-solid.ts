@@ -1,5 +1,6 @@
 /* All free solid fontawesome icons -> https://fontawesome.com/icons?d=gallery&s=solid&m=free */
 
+import { faOptinMonster } from '@fortawesome/free-brands-svg-icons';
 import {
     faAngleDown,
     faAngleRight,
@@ -7,18 +8,23 @@ import {
     faBars,
     faBookOpen,
     faBox,
+    faCaretDown,
     faChartArea,
     faChartBar,
     faChartPie,
     faChevronDown,
     faChevronUp,
     faColumns,
+    faEdit,
     faFileContract,
     faFilm,
     faList,
+    faPlus,
     faSearch,
+    faSync,
     faTable,
     faTachometerAlt,
+    faTrash,
     faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -41,5 +47,11 @@ export const fontAwesomeSolidIcons = {
     faBox,
     faList,
     faFilm,
-    faFileContract
+    faFileContract,
+    faPlus,
+    faOptinMonster,
+    faCaretDown,
+    faEdit,
+    faTrash,
+    faSync
 };

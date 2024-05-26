@@ -20,3 +20,23 @@
 ::ng-deep .modal-dialog {
     width: 100%;
 }
+
+textarea {
+    resize: none;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.custom-file-label {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+::ng-deep .modal-content {
+    padding: 20px;
+}

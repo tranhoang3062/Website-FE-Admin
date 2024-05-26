@@ -1,6 +1,6 @@
 /* tslint:disable: ordered-imports*/
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NavigationModule } from '@modules/navigation/navigation.module';
@@ -9,6 +9,15 @@ import { AppCommonModule } from '@common/app-common.module';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NgSelectModule } from '@ng-select/ng-select';
+
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
 
 @NgModule({
     declarations: [CategoriesComponent],
@@ -29,8 +38,17 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
         }),
         NgxDaterangepickerMd,
         NgxDaterangepickerMd.forRoot(),
-        NgbPaginationModule
+        NgbPaginationModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        NgSelectModule
     ],
+    providers: [DatePipe],
     exports: [CategoriesComponent]
 })
 export class CategoriesModule { }

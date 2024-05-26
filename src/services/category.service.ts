@@ -12,6 +12,7 @@ export class CategoryService {
     }
 
     getList(filters?: any) {
+        delete filters?.total;
         return this.apiService.getData('/admin/category/list', filters);
     }
 

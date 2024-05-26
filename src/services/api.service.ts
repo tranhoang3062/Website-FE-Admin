@@ -21,8 +21,12 @@ export class ApiService {
     constructor(
         private http: HttpClient,
         private router: Router,
-        private alertService: AlertService,
+        private alertService: AlertService
     ) {
+        const accessToken = localStorage.getItem('access_token');
+        this.headers = new HttpHeaders({
+            'Authorization': 'Bearer ' + accessToken
+        });
     }
 
     /**

@@ -1,5 +1,7 @@
-<li class="nav-item dropdown dropdown-user no-caret" *ngIf="userService.user$ | async as user" ngbDropdown placement="bottom-right" display="dynamic">
-    <a class="nav-link dropdown-toggle" id="userDropdown" ngbDropdownToggle data-cy="userMenu" role="button" aria-haspopup="true" aria-expanded="false"><fa-icon [icon]='["fas", "user"]'></fa-icon></a>
+<li class="nav-item dropdown dropdown-user no-caret" *ngIf="userService.user$ | async as user" ngbDropdown
+    placement="bottom-right" display="dynamic">
+    <a class="nav-link dropdown-toggle" id="userDropdown" ngbDropdownToggle data-cy="userMenu" role="button"
+        aria-haspopup="true" aria-expanded="false"><fa-icon [icon]='["fas", "user"]'></fa-icon></a>
     <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownUser">
         <h6 class="dropdown-header">
             <div class="dropdown-user-details">
@@ -7,9 +9,32 @@
                 <div class="dropdown-user-details-email">{{ user.email }}</div>
             </div>
         </h6>
+
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" routerLink="/dashboard">Settings</a><a class="dropdown-item" routerLink="/dashboard">Activity Log</a>
+
+        <li class="nav-item dropdown line-hover" style="width: 100%; padding: 0.25rem 1.5rem;" ngbDropdown placement="bottom-right">
+            <a ngbDropdownToggle class="nav-link dropdown-toggle p-0" href="javascript:void(0)" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-5" style="color: #212529">Language</span>
+                <span style="color: #212529" *ngIf="lang == 'en'"><img class="rounded-1" src="../../../../assets/flag-icon/gb.svg" width="20"> English</span>
+                <span style="color: #212529" *ngIf="lang == 'vi'"><img class="rounded-1" src="../../../../assets/flag-icon/vn.svg" width="20"> Vietnamese</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right animated bounceInDown" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+                <button class="dropdown-item" href="#" (click)="switchLanguage('en')">
+                    <img class="rounded-1" src="../../../../assets/flag-icon/gb.svg" width="20" class="mr-2">English
+                </button>
+                <button class="dropdown-item" href="#" (click)="switchLanguage('vi')">
+                    <img class="rounded-1" src="../../../../assets/flag-icon/vn.svg" width="20" class="mr-2">Vietnamese
+                </button>
+            </div>
+        </li>    
+        
         <div class="dropdown-divider"></div>
+
+        <a class="dropdown-item" routerLink="/dashboard">Settings</a>
+        <a class="dropdown-item" routerLink="/dashboard">Activity Log</a>
+
+        <div class="dropdown-divider"></div>
+
         <a class="dropdown-item" routerLink="/dashboard">Logout</a>
     </div>
 </li>

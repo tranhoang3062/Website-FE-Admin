@@ -22,7 +22,7 @@ import * as navigationGuards from './guards';
 import * as navigationServices from './services';
 
 @NgModule({
-    imports: [CommonModule, RouterModule, AppCommonModule],
+    imports: [CommonModule, RouterModule, AppCommonModule, ],
     providers: [...navigationServices.services, ...navigationGuards.guards],
     declarations: [
         ...navigationContainers.containers,

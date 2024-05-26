@@ -1,5 +1,7 @@
-@import 'styles/variables.scss';
-
 #userDropdown {
     cursor: pointer;
+}
+
+.line-hover:hover {
+    background-color: #f8f9fa;
 }

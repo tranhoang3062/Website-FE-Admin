@@ -1,0 +1,23 @@
+{
+    "name": "tên",
+    "Name": "Tên",
+    "Category name": "Tên danh mục",
+    "category name": "tên danh mục",
+    "Category": "Danh mục",
+    "category": "danh mục",
+    "Status": "Trạng thái",
+    "status": "trạng thái",
+    "Create": "Tạo mới",
+    "create": "tạo mới",
+    "Delete": "Xóa",
+    "delete": "xóa",
+    "No": "STT",
+    "Image": "Ảnh",
+    "Search": "Tìm kiếm",
+    "Created at": "Ngày tạo",
+    "Description": "Mô tả",
+    "Action": "Thao tác",
+    "Select status": "Chọn trạng thái",
+    "Cancel": "Hủy bỏ",
+    "Confirm": "Xác nhận"
+}

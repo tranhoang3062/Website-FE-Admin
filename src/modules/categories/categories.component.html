@@ -1,70 +1,132 @@
 <sb-layout-dashboard>
-    <div class="row">
-        <div class="col-12 col-md-4 mb-3">
-            <label>Ngày tạo</label>
-            <input class="form-control" type="text" ngxDaterangepickerMd [ranges]="ranges" [showCustomRangeLabel]="true"
-                [alwaysShowCalendars]="true" opens="right" [locale]="{applyLabel: 'Apply', format: 'DD/MM/YYYY'}"
-                [maxDate]="maxDate" placeholder="Chọn ngày">
+    <form [formGroup]="searchForm">
+        <div class="row">
+            <!-- <div class="col-12 col-md-4 mb-3">
+                <label>Ngày tạo</label>
+                <input class="form-control" type="text" ngxDaterangepickerMd [ranges]="ranges" [showCustomRangeLabel]="true"
+                    [alwaysShowCalendars]="true" opens="right" [locale]="{applyLabel: 'Apply', format: 'DD/MM/YYYY'}"
+                    [maxDate]="maxDate" placeholder="Chọn ngày">
+            </div> -->
+            <div class="col-12 col-md-4 mb-3">
+                <label class="form-label required" translate>ID</label>
+                <input class="form-control" placeholder="ID" formControlName="id">
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+                <label class="form-label required" translate>Category name</label>
+                <input class="form-control" placeholder="{{ 'Category name' | translate }}" formControlName="name">
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+                <label class="form-label required" translate>Status</label>
+                <ng-select [items]="statusConfig" bindLabel="label" bindValue="value" placeholder="{{ 'Select status' | translate }}"></ng-select>
+            </div>
+
+            <div class="col-12 col-md-4 mb-3 d-flex align-items-end">
+                <button class="btn btn-primary mr-2" (click)="search()">
+                    <fa-icon [icon]="icon.faSearch"></fa-icon> <span class="ml-2" translate>Search</span>
+                </button>
+                <button class="btn btn-secondary" (click)="reset()">
+                    <fa-icon [icon]="icon.faSync"></fa-icon>
+                </button>
+            </div>
         </div>
-        <div class="col-12 col-md-4 mb-3">
-            <label class="form-label required">ID</label>
-            <input class="form-control" placeholder="ID">
-        </div>
-        <div class="col-12 col-md-4 mb-3">
-            <label class="form-label required">Tên</label>
-            <input class="form-control" placeholder="ID">
-        </div>
-    </div>
+    </form>
     <div class="row">
         <div class="col-12 d-flex justify-content-end">
-            <button class="btn btn-primary" (click)="openModal(modal)">Tạo mới</button>
+            <button class="btn btn-primary" (click)="openModal(modal, 'create')">
+                <fa-icon [icon]="icon.faPlus"></fa-icon><span class="ml-2" translate>Tạo mới</span>
+            </button>
         </div>
     </div>
-    <div class="table-responsive pt-3" style="padding-bottom: 100px">
-        <table class="table table-row-dashed table-row-gray-300 gs-0 gy-4 align-middle">
+    <div class="table-responsive pt-5" style="padding-bottom: 65px;">
+        <table class="table table-row-bordered table-column-bordered gs-0 gy-4 table-hover align-middle">
             <thead>
                 <tr class="fw-bolder">
-                    <th class="text-nowrap">STT</th>
-                    <th class="text-nowrap">Tên danh mục</th>
-                    <th class="text-nowrap">Mô tả</th>
-                    <th class="text-nowrap">Ngày tạo</th>
-                    <th class="text-nowrap text-center">Thao tác</th>
+                    <th class="text-nowrap" translate>No</th>
+                    <th class="text-nowrap" translate>Category name</th>
+                    <th class="text-nowrap text-center" translate>Image</th>
+                    <th class="text-nowrap text-center" translate>Description</th>
+                    <th class="text-nowrap text-center" translate>Created at</th>
+                    <th class="text-nowrap text-center" translate>Action</th>
                 </tr>
             </thead>
             <tbody>
-
+                <ng-container *ngIf="dataList?.length > 0">
+                    <tr *ngFor="let item of dataList">
+                        <td class="text-nowrap text-center">{{ item.id }}</td>
+                        <td class="text-nowrap">{{ item.name }}</td>
+                        <td class="text-center">
+                            <img src="{{ item.avatar || '../../../assets/img/no-image.png' }}" width="100">
+                        </td>
+                        <td>{{ item.description }}</td>
+                        <td class="text-nowrap text-center">{{ item.created_at | date: 'dd/MM/YYYY' }}</td>
+                        <td class="text-nowrap text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-secondary px-3">
+                                    <fa-icon [icon]="icon.faCaretDown"></fa-icon>
+                                </button>
+                                <div class="dropdown-content text-left">
+                                    <a href="javascript:void:()" (click)="openModal(modal, 'edit', item)"><fa-icon
+                                            [icon]="icon.faEdit" class="mr-2"></fa-icon> Edit</a>
+                                    <a href="javascript:void(0)" (click)="deleteCategory(item.id)"><fa-icon
+                                            [icon]="icon.faTrash" class="mr-2"></fa-icon> Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+                <tr *ngIf="dataList?.length == 0">
+                    <td colspan="8" class="text-center" translate>Không có dữ liệu</td>
+                </tr>
             </tbody>
         </table>
     </div>
-    <div>
-        <p class="float-left">Total: {{ collectionSize }}</p>
-        <ngb-pagination class="float-right" [collectionSize]="paging.total" [(page)]="paging.page"
-            [pageSize]="paging.page_size" (pageChange)="changePage()" [rotate]="true" [boundaryLinks]="true"
-            [maxSize]="5"></ngb-pagination>
+    <div class="mt-5" style="border: 1px solid #EAECF0; border-radius: 16px">
+        <div class="d-flex justify-content-between align-items-center p15" *ngIf="paging.total > 0">
+            <div class="total-items d-flex align-items-center">
+                <div translate>Total: <strong>{{ paging.total }}</strong></div>
+            </div>
+            <div class="paging">
+                <ngb-pagination [collectionSize]="paging.total" [(page)]="paging.page" [maxSize]="5"
+                    [pageSize]="paging.page_size" [rotate]="true" [boundaryLinks]="true"
+                    (pageChange)="changePage($event)" class="pagination justify-content-end align-items-center mt-3"></ngb-pagination>
+            </div>
+        </div>
     </div>
 </sb-layout-dashboard>
 
 <ng-template #modal let-modal>
     <div class="modal-header pb-0 align-items-center" style="border: none;">
-        <h4 class="fs--18">Create category</h4>
+        <h4 class="fs--18">{{ title }}</h4>
     </div>
     <div class="modal-body pt-0">
-        <form class="form-horizontal m-t-30">
-            <div class="form-group required">
-                <label class="control-label">Category name</label>
-                <input type="text" class="form-control" placeholder="Select category name" formControlName="title" (change)="onChange($event)"/>
+        <form [formGroup]="form">
+            <div class="form-group">
+                <label class="control-label required" translate>Category name</label>
+                <input type="text" class="form-control" placeholder="Category name" formControlName="name" (change)="genSlug($event)"/>
                 <!-- <div class="invalid-feedback" *ngIf="fails && fails['title']">
                     {{ fails['title'][0] }}
                 </div> -->
             </div>
-            <div class="form-group required">
-                <label class="control-label">Image</label>
+            <div class="form-group">
+                <label class="control-label required" translate>Slug</label>
+                <input type="text" class="form-control" placeholder="Slug" formControlName="slug" readonly="true"/>
+            </div>
+            <div class="form-group">
+                <label class="control-label required" translate>Description</label>
+                <textarea type="text" class="form-control" placeholder="Enter text..." formControlName="description" rows="3"></textarea>
+                <!-- <div class="invalid-feedback" *ngIf="fails && fails['title']">
+                    {{ fails['title'][0] }}
+                </div> -->
+            </div>
+            <div class="form-group">
+                <label class="control-label required" translate>Image</label>
                 <div class="input-group">
                     <div>
-                        <img src="{{ base64Image || '../../../../assets/img/no-image.png' }}" width="100" height="100"/>
+                        <img src="{{ base64Image || '..../../../assets/img/no-image.png' }}" width="150" height="150" />
                     </div>
                     <div class="custom-file">
-                        <input type="file" placeholder="Choose file" (click)="onInputClick($event)" (change)="onFileChanged($event, '')" class="custom-file-input" accept="image/*">
+                        <input type="file" placeholder="Choose file" (click)="onInputClick($event)"
+                            (change)="onFileChanged($event, '')" class="custom-file-input" accept="image/*">
                         <input type="hidden" formControlName="avatar">
                         <label class="custom-file-label">{{ base64Image }}</label>
                     </div>
@@ -74,18 +136,18 @@
                 </div> -->
             </div>
             <div class="form-group" style="display: flex; flex-direction: row;">
-                <label class="control-label" style="margin-right: 10px;">Status</label>
-                <div class="form-check-label">
+                <label class="control-label" style="margin-right: 10px;" translate>Status</label>
+                <div class="permissions-checkbox mt-1">
                     <label class="switch">
-                        <input type="checkbox" [checked]="false"/>
+                        <input type="checkbox" [checked]="form.value.status === 1" (click)="changeStatus($event)"/>
                         <div class="slider"></div>
                     </label>
                 </div>
             </div>
 
-            <div class="d-flex justify-content-center mt-2 gap-3">
-                <button type="button" class="btn btn-success">Create</button>
-                <button type="button" class="btn btn-secondary">Cancel</button>
+            <div class="d-flex justify-content-center mt-2" style="gap: 15px">
+                <button type="button" class="btn btn-success" (click)="submit()" translate>Confirm</button>
+                <button type="button" class="btn btn-secondary" (click)="closeModal()" translate>Cancel</button>
             </div>
         </form>
     </div>
