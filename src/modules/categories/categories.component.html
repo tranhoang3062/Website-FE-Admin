@@ -17,7 +17,7 @@
             </div>
             <div class="col-12 col-md-4 mb-3">
                 <label class="form-label required" translate>Status</label>
-                <ng-select [items]="statusConfig" bindLabel="label" bindValue="value" placeholder="{{ 'Select status' | translate }}"></ng-select>
+                <ng-select [items]="statusConfig" bindLabel="label" bindValue="value" placeholder="{{ 'Select status' | translate }}" formControlName="status"></ng-select>
             </div>
 
             <div class="col-12 col-md-4 mb-3 d-flex align-items-end">

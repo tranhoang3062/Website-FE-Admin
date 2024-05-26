@@ -27,23 +27,6 @@ export class CategoriesComponent implements OnInit {
         total: 0,
     };
 
-    ranges: any = {
-        'Today': [moment(), moment()],
-        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        'This Week': [moment().startOf('week'), moment().endOf('week')],
-        'Last Week': [moment().subtract(1, 'week').startOf('week'), moment().subtract(1, 'week').endOf('week')],
-        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-        'This Month': [moment().startOf('month'), moment().endOf('month')],
-        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-    };
-
-    maxDate: any;
-
-    dateLimit: any;
-
-    selected: any;
-
     base64Image: any;
 
     dataList: any = [];
@@ -63,7 +46,7 @@ export class CategoriesComponent implements OnInit {
     searchForm: any = new FormGroup({
         id: new FormControl(null),
         name: new FormControl(null),
-        sattus: new FormControl(null),
+        status: new FormControl(null),
         hot: new FormControl(null)
     });
 
@@ -104,6 +87,7 @@ export class CategoriesComponent implements OnInit {
     }
 
     listCategories() {
+        console.log(this.searchForm.value)
         this.loading = true;
         this.categoryService.getList({ ...this.paging, ...this.searchForm.value }).subscribe(res => {
             if (res.status == 'success') {

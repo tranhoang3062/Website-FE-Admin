@@ -1,4 +1,3 @@
-/* tslint:disable: ordered-imports*/
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
